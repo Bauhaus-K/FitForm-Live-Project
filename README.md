@@ -13,7 +13,7 @@ Microsoft AI School Cohort 8, First Team Project(20251111 ~ 20251121)
 
 ## 👀 How does it work?
 
-<img src="./images/demo.mp4" style="width: 100%; height: auto;" />
+<img src="./images/demo.gif" style="width: 100%; height: auto;" />
 
 ## ⚙️ Pipeline
 
