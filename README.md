@@ -3,7 +3,7 @@ Microsoft AI School Cohort 8, First Team Project(20251111 ~ 20251121)
 
 ## 📌 Summary
 
--   🎯 Master your Form **Prevent Injury** and **Be Healthy**.
+-   🎯 Master your Form, **Prevent Injury** and **Be Healthy**.
 -   🤔 **Why** this project exists
     -   🚧 The Reality Beginners Face : Most beginners struggle to learn proper exercise form. 
     -   📣 Pain Points : Injury Risk, Lack of Feedback, Financial Burden, Lack of Motivation
@@ -13,7 +13,7 @@ Microsoft AI School Cohort 8, First Team Project(20251111 ~ 20251121)
 
 ## 👀 How does it work?
 
-<img src="./images/demo.gif" style="width: 100%; height: auto;" />
+<img src="./images/demo.mp4" style="width: 100%; height: auto;" />
 
 ## ⚙️ Pipeline
 
