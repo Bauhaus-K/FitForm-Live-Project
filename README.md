@@ -32,12 +32,14 @@ Microsoft AI School Cohort 8, First Team Project(20251111 ~ 20251121)
   <table align="center">
     <tr>
       <td align="center"><img src="https://github.com/bauhaus-k.png" style="width: 90%; height: auto;" /></td>
+      <td align="center"><img src="https://github.com/oliverlee9292.png" style="width: 90%; height: auto;" /></td>        
       <td align="center"><img src="https://github.com/henryeffel.png" style="width: 90%; height: auto;" /></td>
       <td align="center"><img src="https://github.com/medori9999.png" style="width: 90%; height: auto;" /></td>
       <td align="center"><img src="https://github.com/15nayana1021.png" style="width: 90%; height: auto;" /></td> 
     </tr>
     <tr>
       <td align="center"><a href="https://github.com/bauhaus-k">김태훈</a></td>
+      <td align="center"><a href="https://github.com/oliverlee9292">이동현</a></td>
       <td align="center"><a href="https://github.com/henryeffel">고영후</a></td>
       <td align="center"><a href="https://github.com/medori9999">이재웅</a></td>
       <td align="center"><a href="https://github.com/15nayana1021">허진호</a></td>   
@@ -51,17 +53,22 @@ Microsoft AI School Cohort 8, First Team Project(20251111 ~ 20251121)
       <td align="center" style="min-width: 220px;">
         <div>Architecture design</div>
         <div>Server integration</div>
-        <div>UI/UX</div>
+        <div>Pose Model ML</div>
       </td>
       <td align="center" style="min-width: 220px;">
-        <div>Pose Model</div>
+        <div>Pose Model ML</div>
+        <div>Data preprocessing</div>
+        <div>Backend</div>
+      </td>
+      <td align="center" style="min-width: 220px;">
+        <div>Pose Model ML</div>
         <div>Code integration</div>
         <div>Gradio</div>
       </td>
       <td align="center" style="min-width: 220px;">
-        <div>Pose Model</div>
-        <div>Data preprocessing</div>
-        <div>Azure Custom Vision</div>
+        <div>Pose Model ML</div>
+        <div>Azure TTS</div>
+        <div>Azure Web App</div>
       </td>
     </tr>
   </table>
