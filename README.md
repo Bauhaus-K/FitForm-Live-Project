@@ -36,13 +36,15 @@ Microsoft AI School Cohort 8, First Team Project(20251111 ~ 20251121)
       <td align="center"><img src="https://github.com/henryeffel.png" style="width: 90%; height: auto;" /></td>
       <td align="center"><img src="https://github.com/medori9999.png" style="width: 90%; height: auto;" /></td>
       <td align="center"><img src="https://github.com/15nayana1021.png" style="width: 90%; height: auto;" /></td> 
+      <td align="center"><img src="https://github.com/Leenurii.png" style="width: 90%; height: auto;" /></td> 
     </tr>
     <tr>
       <td align="center"><a href="https://github.com/bauhaus-k">김태훈</a></td>
       <td align="center"><a href="https://github.com/oliverlee9292">이동현</a></td>
       <td align="center"><a href="https://github.com/henryeffel">고영후</a></td>
       <td align="center"><a href="https://github.com/medori9999">이재웅</a></td>
-      <td align="center"><a href="https://github.com/15nayana1021">허진호</a></td>   
+      <td align="center"><a href="https://github.com/15nayana1021">허진호</a></td>
+      <td align="center"><a href="https://github.com/Leenurii">이누리</a></td>   
     </tr>
     <tr>
       <td align="center" style="min-width: 220px;">
@@ -69,6 +71,11 @@ Microsoft AI School Cohort 8, First Team Project(20251111 ~ 20251121)
         <div>Pose Model ML</div>
         <div>Azure Neural TTS</div>
         <div>Azure Web App</div>
+          </td>
+      <td align="center" style="min-width: 220px;">
+        <div>Server integration</div>
+        <div>Code integration</div>
+        <div>Demo video</div>
       </td>
     </tr>
   </table>
