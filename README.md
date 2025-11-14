@@ -63,11 +63,11 @@ Microsoft AI School Cohort 8, First Team Project(20251111 ~ 20251121)
       <td align="center" style="min-width: 220px;">
         <div>Pose Model ML</div>
         <div>Code integration</div>
-        <div>Gradio</div>
+        <div>Three.js</div>
       </td>
       <td align="center" style="min-width: 220px;">
         <div>Pose Model ML</div>
-        <div>Azure TTS</div>
+        <div>Azure Neural TTS</div>
         <div>Azure Web App</div>
       </td>
     </tr>
