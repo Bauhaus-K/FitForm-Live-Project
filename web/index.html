@@ -22,10 +22,23 @@
   <body>
     <div class="page">
       <header>
-        <div class="title-row">
-          <span class="emoji">🏋️‍♂️</span>
-          <h1>MyPT Azure – On-device Pose Demo</h1>
+        <div class="header-top">
+          <div class="title-row">
+            <span class="emoji">🏋️‍♂️</span>
+            <h1>MyPT Azure – On-device Pose Demo</h1>
+          </div>
+
+          <!-- 🌗 라이트/다크 모드 토글 버튼 -->
+          <button
+            id="theme-toggle"
+            class="theme-toggle"
+            type="button"
+            aria-label="Toggle light / dark mode"
+          >
+            ☀️ Light
+          </button>
         </div>
+
         <p class="subtitle">
           브라우저에서 <strong>MoveNet</strong>으로 팔 굽혀펴기(팔 컬) / 스쿼트 동작을
           실시간으로 인식합니다.
@@ -63,6 +76,14 @@
             <video id="video" playsinline></video>
             <canvas id="canvas"></canvas>
 
+            <!-- 🔥 카운트다운 오버레이 -->
+            <div id="countdown-overlay" class="overlay hidden">3</div>
+
+            <!-- 🔥 휴식 오버레이 -->
+            <div id="rest-overlay" class="overlay hidden">
+              <div>Rest</div>
+              <div id="rest-overlay-time">00:30</div>
+            </div>
             <div class="hud-card">
               <div class="hud-title" id="hud-exercise">Right Arm Curl</div>
 
@@ -70,6 +91,12 @@
                 <div>Reps:<strong id="hud-reps">0</strong></div>
                 <div>Angle:<strong id="hud-angle">0°</strong></div>
                 <div>FPS:<strong id="hud-fps">0</strong></div>
+              </div>
+
+              <!-- 🔥 새로 추가 -->
+              <div class="hud-row">
+                <div>Set:<strong id="hud-set">1 / 3</strong></div>
+                <div>Rest:<strong id="hud-rest">-</strong></div>
               </div>
 
               <div class="status-row">
@@ -90,6 +117,9 @@
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.16.0/dist/tf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/pose-detection"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose"></script>
+
+    <!-- 운동 설정(config) 로드 -->
+    <script src="exercise-config.js"></script>
 
     <!-- main script -->
     <script src="app.js"></script>
