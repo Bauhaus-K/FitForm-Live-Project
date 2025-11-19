@@ -54,18 +54,18 @@ Microsoft AI School Cohort 8, First Team Project(20251111 ~ 20251121)
       </td>
       <td align="center" style="min-width: 220px;">
         <div>Architecture design</div>
-        <div>Server integration</div>
-        <div>Pose Model ML</div>
-      </td>
-      <td align="center" style="min-width: 220px;">
-        <div>Pose Model ML</div>
-        <div>Data preprocessing</div>
-        <div>Backend</div>
-      </td>
-      <td align="center" style="min-width: 220px;">
-        <div>Pose Model ML</div>
         <div>Code integration</div>
-        <div>Three.js</div>
+        <div>Server integration</div>
+      </td>
+      <td align="center" style="min-width: 220px;">
+        <div>Pose Model ML</div>
+        <div>Classification Model Test</div>
+        <div>Regression Model Test</div>
+      </td>
+      <td align="center" style="min-width: 220px;">
+        <div>Pose Model ML</div>
+        <div>Avatar Model</div>
+        <div>Code integration</div>
       </td>
       <td align="center" style="min-width: 220px;">
         <div>Pose Model ML</div>
@@ -73,8 +73,6 @@ Microsoft AI School Cohort 8, First Team Project(20251111 ~ 20251121)
         <div>Azure Web App</div>
           </td>
       <td align="center" style="min-width: 220px;">
-        <div>Server integration</div>
-        <div>Code integration</div>
         <div>Demo video</div>
       </td>
     </tr>
