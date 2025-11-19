@@ -197,15 +197,18 @@
         transform: scaleX(-1);
       }
 
+      /* ★ [CSS 수정] 참고 영상이 잘리지 않고 전체가 다 보이도록 설정 */
       #ref-video {
         transform: none; 
+        object-fit: contain; /* <-- 이 줄이 추가되었습니다! */
+        background: black; /* 여백을 검은색으로 */
       }
 
       canvas {
         pointer-events: none;
       }
 
-      /* ★ 추가된 부분: 중앙 상단 대형 카운터 스타일 */
+      /* 중앙 상단 대형 카운터 스타일 */
       .big-counter {
         position: absolute;
         top: 10%;
@@ -239,7 +242,7 @@
         border: 1px solid rgba(148, 163, 184, 0.25);
         backdrop-filter: blur(16px);
         box-shadow: 0 14px 40px rgba(0, 0, 0, 0.7);
-        z-index: 20; /* 카운터보다 위에 오게 */
+        z-index: 20; 
       }
 
       .hud-title {
@@ -320,6 +323,100 @@
         cursor: default;
       }
 
+      /* 운동 완료 모달 스타일 */
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.75);
+        backdrop-filter: blur(8px);
+        z-index: 9999;
+        display: none; /* 기본적으로 숨김 */
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .modal-overlay.active {
+        display: flex;
+        opacity: 1;
+      }
+
+      .modal-card {
+        background: #0f172a;
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 40px;
+        text-align: center;
+        width: 90%;
+        max-width: 400px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+        transform: scale(0.9);
+        transition: transform 0.3s ease;
+      }
+
+      .modal-overlay.active .modal-card {
+        transform: scale(1);
+      }
+
+      .modal-icon {
+        font-size: 48px;
+        margin-bottom: 16px;
+        display: block;
+      }
+
+      .modal-title {
+        font-size: 24px;
+        font-weight: 700;
+        color: white;
+        margin: 0 0 8px 0;
+      }
+
+      .modal-desc {
+        color: var(--muted);
+        font-size: 14px;
+        margin-bottom: 32px;
+      }
+
+      .stat-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-bottom: 32px;
+      }
+
+      .stat-item {
+        background: rgba(30, 41, 59, 0.5);
+        padding: 16px;
+        border-radius: 16px;
+      }
+
+      .stat-label {
+        font-size: 12px;
+        color: var(--muted);
+        margin-bottom: 4px;
+        display: block;
+      }
+
+      .stat-value {
+        font-size: 20px;
+        font-weight: 700;
+        color: #38bdf8;
+      }
+      
+      .stat-value.accent {
+        color: #22c55e;
+      }
+
+      .modal-close-btn {
+        width: 100%;
+        padding: 12px;
+        font-size: 15px;
+      }
+
       @media (max-width: 768px) {
         .page {
           padding-inline: 12px;
@@ -331,7 +428,6 @@
           left: 14px;
           bottom: 14px;
         }
-        /* 모바일에서는 폰트 사이즈 조정 */
         .big-counter {
             font-size: 4rem;
         }
@@ -389,7 +485,7 @@
                   </div>
                   <div class="control-group">
                     <span>휴식:</span>
-                    <input type="number" id="rest-time-input" value="10" min="5">
+                    <input type="number" id="rest-time-input" value="30" min="5">
                     <span>초</span>
                   </div>
 
@@ -450,6 +546,31 @@
             </section>
 
         </div> </main>
+    </div>
+
+    <div id="summary-modal" class="modal-overlay">
+      <div class="modal-card">
+        <span class="modal-icon">🎉</span>
+        <h2 class="modal-title">운동 완료!</h2>
+        <p class="modal-desc">고생하셨습니다. 오늘의 운동 기록입니다.</p>
+        
+        <div class="stat-grid">
+          <div class="stat-item">
+            <span class="stat-label">총 소요 시간</span>
+            <span class="stat-value" id="summary-time">00:00</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">성공 횟수 (Total)</span>
+            <span class="stat-value accent" id="summary-reps">0회</span>
+          </div>
+          <div class="stat-item" style="grid-column: span 2;">
+            <span class="stat-label">Perfect 자세 비율</span>
+            <span class="stat-value" id="summary-accuracy" style="color: #facc15;">0%</span>
+          </div>
+        </div>
+
+        <button class="btn modal-close-btn" id="modal-close-btn">확인</button>
+      </div>
     </div>
 
     <script>
@@ -515,9 +636,16 @@
         const targetRepsInput = document.getElementById("target-reps-input");
         const restTimeInput = document.getElementById("rest-time-input");
         
-        // ★ 추가된 부분: 대형 카운터 요소
+        // 대형 카운터 요소
         const bigRepsDisplay = document.getElementById("big-reps-display");
         const bigTargetDisplay = document.getElementById("big-target-display");
+
+        // 모달 관련 요소
+        const summaryModal = document.getElementById("summary-modal");
+        const modalCloseBtn = document.getElementById("modal-close-btn");
+        const summaryTime = document.getElementById("summary-time");
+        const summaryReps = document.getElementById("summary-reps");
+        const summaryAccuracy = document.getElementById("summary-accuracy");
 
         // 참고 영상 엘리먼트
         const refVideoEl = document.getElementById("ref-video");
@@ -525,12 +653,12 @@
 
         // 운동별 참고 영상 매핑
         const VIDEO_MAP = {
-            right_curl: "pushup_2.mp4",  
-            left_curl: "plank_1.mp4",    
+            right_curl: "right_arm_curl2.mp4",  
+            left_curl: "",    
             squat: "squat_3.mp4",        
-            lunge_right: "", 
-            shoulder_press: "",
-            side_raise_right: ""
+            lunge_right: "pushup_3.mp4", 
+            shoulder_press: "shoulder_press.mp4",
+            side_raise_right: "plank_1.mp4"
         };
 
         const KEY = {
@@ -795,8 +923,14 @@
             isResting: false,
             setCount: 1,
 
-            // ★ 추가된 부분: TTS 딜레이 제어용 상태
+            // TTS 딜레이 제어용 상태
             badPostureStartTime: 0,
+
+            // 리포트용 통계 변수
+            workoutStartTime: 0, 
+            totalSessionReps: 0, 
+            totalFrames: 0,      
+            goodFrames: 0        
         };
 
         // 운동 시작 전 5초 카운트다운 함수
@@ -805,7 +939,7 @@
             
             const exerciseName = EXERCISES[state.currentKey].name;
             speakText(exerciseName + " 운동을 시작합니다. 준비하세요.");
-            // ★ [수정] 카운트다운 전 대기 시간 5초로 증가
+            
             await sleep(5000); 
 
             for (let i = 5; i > 0; i--) {
@@ -828,7 +962,6 @@
             
             // 휴식 시간 카운트
             for (let i = state.restTime; i > 0; i--) {
-                // ★ [수정] 카메라 정지 또는 휴식 종료(운동 변경) 시 즉시 루프 탈출
                 if (!state.running || !state.isResting) break;
 
                 state.countdownValue = i;
@@ -840,7 +973,7 @@
             }
 
             // 휴식 종료 로직
-            if (state.isResting) { // 운동 변경으로 인한 강제 종료가 아닐 때만 실행
+            if (state.isResting) { 
                 state.isResting = false;
                 state.countdownValue = 0;
                 state.reps = 0; // 렙수 초기화
@@ -980,7 +1113,7 @@
             if (feedback.good) statusDot.classList.add("good");
             else statusDot.classList.add("bad");
 
-            // ★ 추가된 부분: 대형 카운터 텍스트 업데이트
+            // 대형 카운터 텍스트 업데이트
             bigRepsDisplay.textContent = state.reps;
             bigTargetDisplay.textContent = state.targetReps;
         }
@@ -994,10 +1127,15 @@
             state.isCountingDown = false;
             state.isResting = false; 
             state.countdownValue = 0;
-            // state.setCount = 1; // 리셋 버튼 누를때만 초기화하도록 아래 리스너에 추가함
-
-            // ★ 추가된 부분: TTS 타이머 초기화
+            
+            // TTS 타이머 초기화
             state.badPostureStartTime = 0;
+
+            // 리포트용 통계 초기화
+            state.workoutStartTime = 0; 
+            state.totalSessionReps = 0;
+            state.totalFrames = 0;
+            state.goodFrames = 0;
 
             statusLabel.textContent = "-";
             statusDetail.textContent = "";
@@ -1006,7 +1144,6 @@
             hudReps.textContent = "0";
             hudAngle.textContent = "0°";
             
-            // ★ 추가된 부분: 대형 카운터 초기화
             bigRepsDisplay.textContent = "0";
         }
 
@@ -1023,6 +1160,7 @@
             if (angle < down && state.stage === "up") {
                 state.stage = "down";
                 state.reps += 1;
+                state.totalSessionReps += 1; // 전체 누적 횟수 증가
                 
                 // 목표 횟수 도달 시
                 if (state.reps >= state.targetReps) {
@@ -1112,20 +1250,24 @@
                     const fb = ex.feedback(angle);
                     updateHUD(angle, fb);
 
-                    // ★ 추가된 부분: TTS 코칭 로직 (3초 이상 자세 오류 시 말하기)
+                    // 정확도 계산을 위한 프레임 수집
+                    state.totalFrames++;
+                    if (fb.good) {
+                        state.goodFrames++;
+                    }
+
+                    // TTS 코칭 로직
                     if (!fb.good) {
                         if (state.badPostureStartTime === 0) {
-                            // 처음 나쁜 자세 감지 시 시간 기록
                             state.badPostureStartTime = performance.now();
                         } else {
                             const elapsed = performance.now() - state.badPostureStartTime;
-                            if (elapsed > 3000) { // 3초(3000ms) 경과 확인
+                            if (elapsed > 3000) { 
                                 speakText(fb.detail);
-                                state.badPostureStartTime = 0; // 말했으면 타이머 초기화 (계속 말하기 방지)
+                                state.badPostureStartTime = 0; 
                             }
                         }
                     } else {
-                        // 자세가 좋아지면 타이머 초기화
                         state.badPostureStartTime = 0;
                     }
                 }
@@ -1141,8 +1283,43 @@
         }
 
         // --------------------------
-        // 6. 카메라 시작/정지
+        // 6. 카메라 시작/정지 & 리포트 함수
         // --------------------------
+        
+        // 요약 리포트 계산 및 표시 함수
+        function showSummary() {
+            // 운동 시작한 적이 없으면 리포트 안 띄움
+            if (state.workoutStartTime === 0) return;
+
+            const endTime = Date.now();
+            const durationMs = endTime - state.workoutStartTime;
+            
+            // 시간 포맷팅 (MM:SS)
+            const totalSeconds = Math.floor(durationMs / 1000);
+            const m = Math.floor(totalSeconds / 60);
+            const s = totalSeconds % 60;
+            const timeStr = `${m}분 ${s}초`;
+
+            // 정확도 계산
+            let accuracy = 0;
+            if (state.totalFrames > 0) {
+                accuracy = Math.round((state.goodFrames / state.totalFrames) * 100);
+            }
+
+            // DOM 업데이트
+            summaryTime.textContent = timeStr;
+            summaryReps.textContent = `${state.totalSessionReps}회`;
+            summaryAccuracy.textContent = `${accuracy}%`;
+
+            // 모달 표시
+            summaryModal.classList.add("active");
+        }
+
+        // 모달 닫기 버튼
+        modalCloseBtn.addEventListener("click", () => {
+            summaryModal.classList.remove("active");
+        });
+
         async function startCamera() {
             if (state.running) return;
             try {
@@ -1173,6 +1350,9 @@
                 state.targetReps = parseInt(targetRepsInput.value) || 15;
                 state.restTime = parseInt(restTimeInput.value) || 30;
                 
+                // 운동 시작 시간 기록
+                state.workoutStartTime = Date.now();
+
                 // 시작 시 영상 설정
                 updateRefVideo(state.currentKey);
 
@@ -1186,6 +1366,11 @@
         }
 
         function stopCamera() {
+            // 카메라 끌 때 리포트 보여주기 (운동을 조금이라도 했으면)
+            if (state.workoutStarted) {
+                showSummary();
+            }
+
             state.running = false;
             if (state.animationId) cancelAnimationFrame(state.animationId);
             if (state.stream) {
@@ -1197,7 +1382,7 @@
             
             // 초기화 로직
             resetCounter();
-            state.setCount = 1; // 세트 카운트도 1로 리셋
+            state.setCount = 1; 
         }
 
         // 참고 영상 업데이트 함수
@@ -1221,15 +1406,20 @@
         });
 
         resetBtn.addEventListener("click", () => {
+            // 리셋 버튼 누를 때도 리포트 보여주기
+            if (state.workoutStarted) {
+                showSummary();
+            }
+            
             resetCounter();
-            state.setCount = 1; // 리셋 버튼 누르면 세트도 초기화
+            state.setCount = 1; 
         });
 
         exerciseSelect.addEventListener("change", (e) => {
             const key = e.target.value;
             state.currentKey = key;
             resetCounter();
-            state.setCount = 1; // 운동 종목 바뀌면 세트도 초기화
+            state.setCount = 1; 
 
             const ex = EXERCISES[key];
             hudExercise.textContent = ex.name;
@@ -1244,7 +1434,6 @@
         targetRepsInput.addEventListener("change", (e) => {
             state.targetReps = parseInt(e.target.value);
             hudTarget.textContent = state.targetReps;
-            // ★ 추가된 부분: 대형 타겟 숫자 업데이트
             bigTargetDisplay.textContent = state.targetReps;
         });
         restTimeInput.addEventListener("change", (e) => {
@@ -1254,7 +1443,6 @@
         // 초기 HUD
         hudExercise.textContent = EXERCISES[state.currentKey].name;
         hudTarget.textContent = state.targetReps;
-        bigTargetDisplay.textContent = state.targetReps; // ★ 초기값 반영
         
         // 초기 영상 설정
         updateRefVideo(state.currentKey);
